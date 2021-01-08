@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+const db = require('./database/models/index');
 
 //environment variable
 if(process.env.NODE_ENV !== "production"){
@@ -29,3 +30,15 @@ app.use(express.json());
 app.listen(app.get('port'), () => {
     console.log("Server is listening on port ", app.get('port'));
 });
+
+//Testing DB connection
+async function testConnectionDB (sequelize) {
+    
+    try {
+        await sequelize.authenticate();
+        console.log('Connection has been established successfully.');
+    } catch (error) {
+        console.error('Unable to connect to the database:', error);
+    }
+}
+testConnectionDB(db.sequelize);
