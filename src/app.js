@@ -10,7 +10,9 @@ if(process.env.NODE_ENV !== "production"){
 console.log(`Environment: ${process.env.NODE_ENV}`);
 
 
-//const booksRoute = require('./routes/books');
+const booksRoute = require('./routes/books');
+const categoriesRoute = require('./routes/categories');
+const ratingScaleRoute = require('./routes/ratingScale')
 
 
 const app = express();
@@ -25,10 +27,15 @@ app.use(morgan('dev'));
 app.use(cors()); 
 app.use(express.json());
 
+//routes
+app.use('/api/books', booksRoute);
+app.use('/api/categories', categoriesRoute);
+app.use('/api/rating', ratingScaleRoute);
+
 
 //server
 app.listen(app.get('port'), () => {
-    console.log("Server is listening on port ", app.get('port'));
+    console.log(`Server is listening on port ${app.get('port')}`);
 });
 
 //Testing DB connection
